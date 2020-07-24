@@ -1,3 +1,6 @@
 # Verification (aka. Secure Mode)
 
-Code samples of how to generate sha256 HMAC signatures of your user identifier
+Code samples of how to generate timestamp-anchored sha256 HMAC signature of your user identifier
+
+Please add a PR with any changes that would make these code snippets more complete or simply better!
+ 
