@@ -3,7 +3,7 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 
-var key = "";
+var key = System.Environment.GetEnvironmentVariable("CHAMELEON_VERIFICATION_SECRET");
 var userId = "";
 
 var now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
