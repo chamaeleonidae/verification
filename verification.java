@@ -4,12 +4,11 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 Mac mac = Mac.getInstance("HmacSHA256");
+String secret = System.getenv("CHAMELEON_VERIFICATION_SECRET").getBytes("UTF-8");
 SecretKeySpec secretKeySpec = new SecretKeySpec(secret, "HmacSHA256");
 mac.init(secretKeySpec);
 
 String now = String.valueOf(System.currentTimeMillis() / 1000L);
-
-String secret = System.getenv("CHAMELEON_VERIFICATION_SECRET").getBytes("UTF-8");
 String uid_hash = String.format("%032x", new BigInteger(1, mac.doFinal((uid + "-" + now).getBytes("UTF-8")))) + "-" + now;
 
 //
