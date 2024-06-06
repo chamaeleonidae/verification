@@ -9,7 +9,7 @@ SecretKeySpec secretKeySpec = new SecretKeySpec(secret, "HmacSHA256");
 mac.init(secretKeySpec);
 
 String now = String.valueOf(System.currentTimeMillis() / 1000L);
-String uid_hash = String.format("%032x", new BigInteger(1, mac.doFinal((uid + "-" + now).getBytes("UTF-8")))) + "-" + now;
+String uid_hash = String.format("%064x", new BigInteger(1, mac.doFinal((uid + "-" + now).getBytes("UTF-8")))) + "-" + now;
 
 //
 // send back the `uid_hash` along side `uid` and add to the existing `chmln.identify(uid, { uid_hash: uid_hash })`
