@@ -4,7 +4,7 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 Mac mac = Mac.getInstance("HmacSHA256");
-String secret = System.getenv("CHAMELEON_VERIFICATION_SECRET").getBytes("UTF-8");
+byte[] secret = System.getenv("CHAMELEON_VERIFICATION_SECRET").getBytes("UTF-8");
 SecretKeySpec secretKeySpec = new SecretKeySpec(secret, "HmacSHA256");
 mac.init(secretKeySpec);
 
