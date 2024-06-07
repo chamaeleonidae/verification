@@ -4,7 +4,10 @@ import java.time.Instant
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 
-fun generateUserIdHash(secretKey: String, userId: String): String {
+fun generateUserIdHash(userId: String): String {
+    val secretKey = System.getenv("CHAMELEON_VERIFICATION_SECRET")
+        ?: throw IllegalArgumentException("Environment variable CHAMELEON_VERIFICATION_SECRET is not set")
+        
     val now = Instant.now().epochSecond.toString()
     val secret = secretKey.toByteArray(StandardCharsets.UTF_8)
     val secretKeySpec = SecretKeySpec(secret, "HmacSHA256")
@@ -16,18 +19,14 @@ fun generateUserIdHash(secretKey: String, userId: String): String {
     mac.init(secretKeySpec)
     val hash = BigInteger(1, mac.doFinal(userAndTimeBytes))
 
-    return String.format("%032x-%s", hash, now)
+    return String.format("%064x-%s", hash, now)
 }
 
 fun main() {
-    // Retrieve the secret key from environment variables
-    val secretKey = System.getenv("CHAMELEON_VERIFICATION_SECRET")
-        ?: throw IllegalArgumentException("Environment variable CHAMELEON_VERIFICATION_SECRET is not set")
-
     val userId = "your_user_id"
 
     // Generate the UID hash
-    val uidHash = generateUserIdHash(secretKey, userId)
+    val uidHash = generateUserIdHash(userId)
     println("Generated UID Hash: $uidHash")
 }
 
