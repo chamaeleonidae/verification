@@ -5,9 +5,9 @@ import time
 import hmac
 import hashlib
 
-secret = os.getenv('CHAMELEON_VERIFICATION_SECRET')
-now = string(int(time.time()))
-uid_hash = '-'.join([hmac.new(bytes(secret, 'utf-8'), msg = bytes('-'.join([uid, now]), 'utf-8'), digestmod = hashlib.sha256().hexdigest()), now])
+secret = os.environ['CHAMELEON_VERIFICATION_SECRET']
+now = str(int(time.time()))
+uid_hash = '-'.join([hmac.new(bytes(secret, 'utf-8'), msg=bytes('-'.join([uid, now]), 'utf-8'), digestmod=hashlib.sha256).hexdigest(), now])
 
 #
 # send back the `uid_hash` along side `uid` and add to the existing `chmln.identify(uid, { uid_hash: uid_hash })`
